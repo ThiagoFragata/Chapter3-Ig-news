@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { stripe } from "../../../services/stripe";
+import { stripe } from "../../services/stripe";
 import { getSession } from "next-auth/client";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       cancel_url: process.env.STRIPE_CANCEL_URL,
     });
 
-    return res.status(200).json({ sessionId: StripeCheckoutSession });
+    return res.status(200).json({ sessionId: StripeCheckoutSession.id });
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method not allowed");
