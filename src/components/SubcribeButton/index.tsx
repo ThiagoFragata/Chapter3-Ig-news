@@ -8,7 +8,6 @@ interface SubscribeButtonProps {
 }
 
 export function SubscribeButton({ priceId }: SubscribeButtonProps) {
-  const [session] = useSession();
   async function handleSubscribe() {
     if (!signIn) {
       signIn("github");
