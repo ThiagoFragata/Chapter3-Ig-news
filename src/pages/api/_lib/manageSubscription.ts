@@ -16,13 +16,14 @@ export async function saveSubscription(
   );
 
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+
   const subscriptionData = {
     id: subscription.id,
     userId: userRef,
     status: subscription.status,
     price_id: subscription.items.data[0].price.id,
   };
-
+  console.log(createAction);
   if (createAction) {
     await fauna.query(
       q.Create(q.Collection("subscriptions"), { data: subscriptionData })
@@ -34,9 +35,7 @@ export async function saveSubscription(
           "ref",
           q.Get(q.Match(q.Index("subscription_by_id"), subscriptionId))
         ),
-        {
-          data: subscriptionData,
-        }
+        { data: subscriptionData }
       )
     );
   }
